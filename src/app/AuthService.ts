@@ -6,6 +6,13 @@ import jwt_decode from 'jwt-decode';
 export class AuthService
 {
   private decodedToken: any| null;
+
+  public GetEmailAddress() : string | undefined
+  {
+    if(this.decodedToken === undefined || this.decodedToken ===null)
+     return undefined;
+    return  this.decodedToken.email;
+  }
   public async login(email:string, password:string)
   {
     const user = await Auth.signIn(String(email), String(password));
@@ -13,6 +20,7 @@ export class AuthService
     {
     let decoded = jwt_decode(user.signInUserSession.idToken.jwtToken);
     this.decodedToken=decoded;
+    console.log(this.decodedToken.email);
     }
     catch(error)
     {
